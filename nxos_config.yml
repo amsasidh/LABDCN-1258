@@ -1,0 +1,10 @@
+---
+- hosts: nxos
+  name: Configure hostname using Generic Config module
+  gather_facts: no
+
+  tasks:
+    - name: NXOS Generic config
+      nxos_config:
+        lines: hostname new-host-name-nxos-v1
+        save_when: modified

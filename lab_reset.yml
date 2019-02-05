@@ -1,0 +1,29 @@
+---
+- name: reset lab
+  hosts: iosv1, iosv2, nxos1
+  connection: network_cli
+
+  tasks:
+    - name: reconfigure hostname
+      nxos_config:
+        lines: hostname nx-osv1
+      when: ansible_network_os == 'nxos'
+
+    - name: remove vlans from nxos
+      nxos_config:
+        lines: no vlan 2-1001
+      when: ansible_network_os == 'nxos'
+
+    - name: remove access-lists from ios devices
+      ios_config:
+        lines: no ip access-list extended test
+      when: ansible_network_os == 'ios'
+
+
+    - name: remove backup directory
+      file:
+        path: backup
+        state: absent
+
+    - name: copy a file to a different name
+      command: cp nxos_vlan_orig.yml nxos_vlan.yml
