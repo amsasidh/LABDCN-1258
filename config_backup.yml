@@ -13,4 +13,3 @@
       ios_config:
         backup: yes
       when: ansible_network_os == 'ios'
-	  
